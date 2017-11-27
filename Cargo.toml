@@ -1,0 +1,12 @@
+[package]
+name = "egg-mode-text"
+version = "0.1.0"
+authors = ["QuietMisdreavus <grey@quietmisdreavus.net>"]
+
+[dependencies]
+regex = "0.1.80"
+lazy_static = "0.2.8"
+unicode-normalization = "0.1.5"
+
+[dev-dependencies]
+yaml-rust = "0.3.5"
