@@ -6,4 +6,7 @@ This library is an attempt to port [twitter-text] to Rust. It was originally par
 it's totally distinct from egg-mode type-wise, so i pulled it out into its own library. (Also it's
 chock full of macros so it was also a bid to bring egg-mode's compile times down. `>_>`)
 
+[twitter-text]: https://github.com/twitter/twitter-text
+[egg-mode]: https://github.com/QuietMisdreavus/twitter-rs
+
 More details to come as i prepare to fully release this.
