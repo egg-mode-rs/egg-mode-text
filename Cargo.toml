@@ -2,6 +2,11 @@
 name = "egg-mode-text"
 version = "0.1.0"
 authors = ["QuietMisdreavus <grey@quietmisdreavus.net>"]
+description = "Library for parsing text for Twitter, including character counting with URL shortening"
+documentation = "https://docs.rs/egg-mode-text"
+repository = "https://github.com/QuietMisdreavus/twitter-text-rs"
+keywords = ["twitter"]
+categories = ["text-processing"]
 license = "MPL-2.0"
 readme = "README.md"
 
