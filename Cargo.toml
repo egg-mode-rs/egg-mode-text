@@ -2,6 +2,8 @@
 name = "egg-mode-text"
 version = "0.1.0"
 authors = ["QuietMisdreavus <grey@quietmisdreavus.net>"]
+license = "MPL-2.0"
+readme = "README.md"
 
 [dependencies]
 regex = "0.1.80"
