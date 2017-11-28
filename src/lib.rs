@@ -760,11 +760,12 @@ pub fn character_count(text: &str, http_url_len: i32, https_url_len: i32) -> (us
 ///from the service itself.
 ///
 ///If you're writing text for a direct message and want to know how many characters are available
-///in that context, see [`service::config`][] and the `dm_text_character_limit` on the struct
-///returned by that function, then call [`character_count`][] and subtract the result from the
-///configuration value.
+///in that context, see [`GET help/configuration`][] in the Twitter API (in the `egg-mode` crate,
+///this is exposed in `egg_mode::service::config`) and the `dm_text_character_limit` returned by
+///that endpoint, then call [`character_count`][] and subtract the result from the configuration
+///value.
 ///
-///[`service::config`]: https://developer.twitter.com/en/docs/developer-utilities/configuration/api-reference/get-help-configuration
+///[`GET help/configuration`]: https://developer.twitter.com/en/docs/developer-utilities/configuration/api-reference/get-help-configuration
 ///[`character_count`]: fn.character_count.html
 ///
 ///# Examples
