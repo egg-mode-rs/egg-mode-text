@@ -684,8 +684,7 @@ fn extract_symbols(text: &str, url_entities: &[Entity]) -> Vec<Entity> {
     results
 }
 
-///Returns how many characters the given text would be, after accounting for URL shortening. Also
-///returns an indicator of whether the given text is a valid length for a tweet.
+///Returns how many characters the given text would be, after accounting for URL shortening.
 ///
 ///For the `http_url_len` and `https_url_len` parameters, call [`GET help/configuration`][] in the
 ///Twitter API (in the `egg-mode` crate, this is exposed in `egg_mode::service::config`) and use
@@ -701,24 +700,24 @@ fn extract_symbols(text: &str, url_entities: &[Entity]) -> Vec<Entity> {
 ///```rust
 /// use egg_mode_text::character_count;
 ///
-/// let (count, _) = character_count("This is a test.", 23, 23);
+/// let count = character_count("This is a test.", 23, 23);
 /// assert_eq!(count, 15);
 ///
 /// // URLs get replaced by a t.co URL of the given length
-/// let (count, _) = character_count("test.com", 23, 23);
+/// let count = character_count("test.com", 23, 23);
 /// assert_eq!(count, 23);
 ///
 /// // Multiple URLs get shortened individually
-/// let (count, _) =
+/// let count =
 ///     character_count("Test https://test.com test https://test.com test.com test", 23, 23);
 /// assert_eq!(count, 86);
 ///```
-pub fn character_count(text: &str, http_url_len: i32, https_url_len: i32) -> (usize, bool) {
+pub fn character_count(text: &str, http_url_len: i32, https_url_len: i32) -> usize {
     //twitter uses code point counts after NFC normalization
     let mut text = text.nfc().collect::<String>();
 
     if text.is_empty() {
-        return (0, false);
+        return 0;
     }
 
     let mut url_offset = 0usize;
@@ -742,11 +741,12 @@ pub fn character_count(text: &str, http_url_len: i32, https_url_len: i32) -> (us
     //make sure to count codepoints, not bytes
     let len = text.chars().count() + url_offset;
 
-    (len, len > 0 && len <= 140)
+    len
 }
 
-///Returns how many characters would remain in a traditional 140-character tweet with the given
-///text. Also returns an indicator of whether the given text is a valid length for a tweet.
+///Returns how many characters would remain with the given text, if the given bound were used as a
+///maximum. Also returns an indicator of whether the given text is a valid length to post with that
+///maximum.
 ///
 ///This function exists as a sort of convenience method to allow clients to call one uniform method
 ///to show a remaining character count on a tweet compose box, and to conditionally enable a
@@ -773,22 +773,28 @@ pub fn character_count(text: &str, http_url_len: i32, https_url_len: i32) -> (us
 ///```rust
 /// use egg_mode_text::characters_remaining;
 ///
-/// let (count, _) = characters_remaining("This is a test.", 23, 23);
+/// let (count, _) = characters_remaining("This is a test.", 140, 23, 23);
 /// assert_eq!(count, 140 - 15);
 ///
 /// // URLs get replaced by a t.co URL of the given length
-/// let (count, _) = characters_remaining("test.com", 23, 23);
+/// let (count, _) = characters_remaining("test.com", 140, 23, 23);
 /// assert_eq!(count, 140 - 23);
 ///
 /// // Multiple URLs get shortened individually
 /// let (count, _) =
-///     characters_remaining("Test https://test.com test https://test.com test.com test", 23, 23);
+///     characters_remaining("Test https://test.com test https://test.com test.com test",
+///                          140, 23, 23);
 /// assert_eq!(count, 140 - 86);
 ///```
-pub fn characters_remaining(text: &str, http_url_len: i32, https_url_len: i32) -> (usize, bool) {
-    let (len, is_valid) = character_count(text, http_url_len, https_url_len);
+pub fn characters_remaining(text: &str,
+                            max: usize,
+                            http_url_len: i32,
+                            https_url_len: i32)
+    -> (usize, bool)
+{
+    let len = character_count(text, http_url_len, https_url_len);
 
-    (140 - len, is_valid)
+    (max - len, len > 0 && len <= max)
 }
 
 #[cfg(test)]
@@ -1191,7 +1197,8 @@ mod test {
 
             //23 is the default character count in the obj-c implementation, tho at time of writing
             //(2016-11-21) i think these lengths have bumped up to 24
-            let (count, is_valid) = character_count(text, 23, 23);
+            let count = character_count(text, 23, 23);
+            let is_valid = count > 0 && count <= 140;
 
             assert_eq!(expected, is_valid, "test '{}' failed with text '{}', counted {} characters",
                        description, text, count);
@@ -1204,7 +1211,7 @@ mod test {
 
             //23 is the default character count in the obj-c implementation, tho at time of writing
             //(2016-11-21) i think these lengths have bumped up to 24
-            let (count, _) = character_count(text, 23, 23);
+            let count = character_count(text, 23, 23);
 
             assert_eq!(expected as usize, count, "test '{}' failed with text '{}'", description, text);
         }
