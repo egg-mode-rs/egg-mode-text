@@ -773,18 +773,18 @@ pub fn character_count(text: &str, http_url_len: i32, https_url_len: i32) -> usi
 ///```rust
 /// use egg_mode_text::characters_remaining;
 ///
-/// let (count, _) = characters_remaining("This is a test.", 140, 23, 23);
-/// assert_eq!(count, 140 - 15);
+/// let (count, _) = characters_remaining("This is a test.", 280, 23, 23);
+/// assert_eq!(count, 280 - 15);
 ///
 /// // URLs get replaced by a t.co URL of the given length
-/// let (count, _) = characters_remaining("test.com", 140, 23, 23);
-/// assert_eq!(count, 140 - 23);
+/// let (count, _) = characters_remaining("test.com", 280, 23, 23);
+/// assert_eq!(count, 280 - 23);
 ///
 /// // Multiple URLs get shortened individually
 /// let (count, _) =
 ///     characters_remaining("Test https://test.com test https://test.com test.com test",
-///                          140, 23, 23);
-/// assert_eq!(count, 140 - 86);
+///                          280, 23, 23);
+/// assert_eq!(count, 280 - 86);
 ///```
 pub fn characters_remaining(text: &str,
                             max: usize,
