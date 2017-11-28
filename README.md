@@ -51,7 +51,7 @@ assert_eq!(entity.substr(text), "#text");
 assert_eq!(results.next(), None);
 ```
 
-For more information, consult the [documentation].
+For more information, check out the [documentation].
 
 [documentation]: https://docs.rs/egg-mode-text
 
@@ -59,7 +59,7 @@ To use this crate in your own project, add the following to your Cargo.toml:
 
 ```toml
 [dependencies]
-egg-mode-text = "0.1.0"
+egg-mode-text = "1.14.7"
 ```
 
 ...and add the following to your crate root:

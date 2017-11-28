@@ -1,6 +1,9 @@
 # changelog for egg-mode-text
 
-## Pending
+## [1.14.7] - 2017-11-28
+
+*Huge version bump to match the upstream twitter-text version.*
+
 ### Changed
 - TLDs and parsing regexes updated to match upstream.
 - `character_count` and `characters_remaining` no longer assume 140 characters. Since Twitter now
