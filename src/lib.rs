@@ -694,7 +694,7 @@ fn extract_symbols(text: &str, url_entities: &[Entity]) -> Vec<Entity> {
 ///both sizes. At the time of this writing (2016-11-28), those numbers were also being returned
 ///from the service itself.
 ///
-///[`service::config`]: https://developer.twitter.com/en/docs/developer-utilities/configuration/api-reference/get-help-configuration
+///[`GET help/configuration`]: https://developer.twitter.com/en/docs/developer-utilities/configuration/api-reference/get-help-configuration
 ///
 ///# Examples
 ///
