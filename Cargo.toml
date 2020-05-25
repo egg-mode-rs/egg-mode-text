@@ -4,15 +4,15 @@ version = "1.14.7"
 authors = ["QuietMisdreavus <grey@quietmisdreavus.net>"]
 description = "Text parsing for Twitter: character counting, hashtag/mention extraction"
 documentation = "https://docs.rs/egg-mode-text"
-repository = "https://github.com/QuietMisdreavus/twitter-text-rs"
+repository = "https://github.com/egg-mode-rs/egg-mode-text"
 keywords = ["twitter"]
 categories = ["text-processing"]
 license = "MPL-2.0"
 readme = "README.md"
 
 [badges]
-travis-ci = { repository = "QuietMisdreavus/twitter-text-rs" }
-appveyor = { repository = "QuietMisdreavus/twitter-text-rs" }
+travis-ci = { repository = "egg-mode-rs/egg-mode-text" }
+appveyor = { repository = "egg-mode-rs/egg-mode-text" }
 
 [dependencies]
 regex = "0.1.80"
