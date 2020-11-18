@@ -64,6 +64,13 @@ macro_rules! try_opt {
     }};
 }
 
+///A convenience macro to extract a (start, end) tuple from a match group
+macro_rules! match_range {
+    ($input:expr, $match:expr) => {{
+        $input.get($match).as_ref().map(|m| (m.start(), m.end()))
+    }};
+}
+
 ///Represents the kinds of entities that can be extracted from a given text.
 #[derive(Debug, PartialEq, Eq, PartialOrd, Ord, Copy, Clone, Hash)]
 pub enum EntityKind {
@@ -245,13 +252,13 @@ pub fn url_entities(text: &str) -> Vec<Entity> {
             break;
         }
 
-        cursor += caps.pos(0).unwrap().1;
+        cursor += match_range!(caps, 0).unwrap().1;
 
-        let preceding_text = caps.at(2);
-        let url_range = caps.pos(3);
-        let protocol_range = caps.pos(4);
-        let domain_range = caps.pos(5);
-        let path_range = caps.pos(7);
+        let preceding_text = caps.get(2).map(|m| m.as_str());
+        let url_range = match_range!(caps, 3);
+        let protocol_range = match_range!(caps, 4);
+        let domain_range = match_range!(caps, 5);
+        let path_range = match_range!(caps, 7);
 
         //if protocol is missing and domain contains non-ascii chars, extract ascii-only
         //domains.
@@ -277,7 +284,7 @@ pub fn url_entities(text: &str) -> Vec<Entity> {
 
                 let domain_test = &substr[domain_range.0..(domain_range.1+extra_char)];
                 let caps = break_opt!(regexen::RE_VALID_ASCII_DOMAIN.captures(domain_test));
-                let url_range = break_opt!(caps.pos(1));
+                let url_range = break_opt!(match_range!(caps, 1));
                 let ascii_url = &domain_test[url_range.0..url_range.1];
 
                 if path_range.is_some() ||
@@ -315,7 +322,7 @@ pub fn url_entities(text: &str) -> Vec<Entity> {
             let domain_range = continue_opt!(domain_range);
 
             //in case of t.co URLs, don't allow additional path characters
-            if let Some((_, to)) = regexen::RE_VALID_TCO_URL.find(&substr[url_range.0..url_range.1]) {
+            if let Some(to) = regexen::RE_VALID_TCO_URL.find(&substr[url_range.0..url_range.1]).map(|m| m.end()) {
                 url_range.1 = url_range.0 + to;
             }
             else if !regexen::RE_URL_FOR_VALIDATION.is_match(&substr[domain_range.0..domain_range.1]) {
@@ -383,12 +390,12 @@ pub fn mention_list_entities(text: &str) -> Vec<Entity> {
         }
 
         let current_cursor = cursor;
-        cursor += caps.pos(0).unwrap().1;
+        cursor += match_range!(caps, 0).unwrap().1;
 
         if !regexen::RE_END_MENTION.is_match(&text[cursor..]) {
-            let at_sign_range = continue_opt!(caps.pos(2));
-            let screen_name_range = caps.pos(3);
-            let list_name_range = caps.pos(4);
+            let at_sign_range = continue_opt!(match_range!(caps, 2));
+            let screen_name_range = match_range!(caps, 3);
+            let list_name_range = match_range!(caps, 4);
 
             if let Some((_, end)) = list_name_range {
                 results.push(Entity {
@@ -476,7 +483,7 @@ pub fn reply_mention_entity(text: &str) -> Option<Entity> {
         return None;
     }
 
-    let reply_range = try_opt!(caps.pos(1));
+    let reply_range = try_opt!(match_range!(caps, 1));
 
     if regexen::RE_END_MENTION.is_match(&text[reply_range.1..]) {
         return None;
@@ -564,10 +571,10 @@ fn extract_hashtags(text: &str, url_entities: &[Entity]) -> Vec<Entity> {
         }
 
         let current_cursor = cursor;
-        cursor += caps.pos(0).unwrap().1;
+        cursor += match_range!(caps, 0).unwrap().1;
 
-        let hashtag_range = break_opt!(caps.pos(1));
-        let text_range = break_opt!(caps.pos(2));
+        let hashtag_range = break_opt!(match_range!(caps, 1));
+        let text_range = break_opt!(match_range!(caps, 2));
 
         //note: check character after the # to make sure it's not \u{fe0f} or \u{20e3}
         //this is because the regex crate doesn't have lookahead assertions, which the objc impl
@@ -654,8 +661,8 @@ fn extract_symbols(text: &str, url_entities: &[Entity]) -> Vec<Entity> {
     for caps in regexen::RE_VALID_SYMBOL.captures_iter(text) {
         if caps.len() < 2 { break; }
 
-        let text_range = break_opt!(caps.pos(0));
-        let symbol_range = break_opt!(caps.pos(1));
+        let text_range = break_opt!(match_range!(caps, 0));
+        let symbol_range = break_opt!(match_range!(caps, 1));
         let mut match_ok = true;
 
         //check the text after the match to see if it's valid; this is because i can't use
