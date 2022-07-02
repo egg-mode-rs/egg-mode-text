@@ -15,9 +15,9 @@ travis-ci = { repository = "egg-mode-rs/egg-mode-text" }
 appveyor = { repository = "egg-mode-rs/egg-mode-text" }
 
 [dependencies]
-regex = "0.1.80"
-lazy_static = "0.2.8"
-unicode-normalization = "0.1.5"
+regex = "1.4"
+lazy_static = "1.4"
+unicode-normalization = "0.1.15"
 
 [dev-dependencies]
-yaml-rust = "0.3.5"
+yaml-rust = "0.4.4"

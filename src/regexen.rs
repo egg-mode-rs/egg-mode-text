@@ -421,33 +421,33 @@ macro_rules! end_symbol_match {
 
 lazy_static! {
     pub static ref RE_SIMPLIFIED_VALID_URL: Regex =
-        RegexBuilder::new(simplified_valid_url!()).case_insensitive(true).compile().unwrap();
+        RegexBuilder::new(simplified_valid_url!()).case_insensitive(true).build().unwrap();
     pub static ref RE_VALID_TCO_URL: Regex =
-        RegexBuilder::new(r"^https?://t\.co/[a-zA-Z0-9]+").case_insensitive(true).compile().unwrap();
+        RegexBuilder::new(r"^https?://t\.co/[a-zA-Z0-9]+").case_insensitive(true).build().unwrap();
     pub static ref RE_URL_FOR_VALIDATION: Regex =
-        RegexBuilder::new(url_domain_for_validation!()).case_insensitive(true).compile().unwrap();
+        RegexBuilder::new(url_domain_for_validation!()).case_insensitive(true).build().unwrap();
     pub static ref RE_URL_WO_PROTOCOL_INVALID_PRECEDING_CHARS: Regex =
         Regex::new(r"[-_./]\z").unwrap();
     pub static ref RE_VALID_ASCII_DOMAIN: Regex =
-        RegexBuilder::new(valid_ascii_domain!()).case_insensitive(true).compile().unwrap();
+        RegexBuilder::new(valid_ascii_domain!()).case_insensitive(true).build().unwrap();
     pub static ref RE_INVALID_SHORT_DOMAIN: Regex =
-        RegexBuilder::new(invalid_short_domain!()).case_insensitive(true).compile().unwrap();
+        RegexBuilder::new(invalid_short_domain!()).case_insensitive(true).build().unwrap();
     pub static ref RE_VALID_SPECIAL_SHORT_DOMAIN: Regex =
-        RegexBuilder::new(valid_special_short_domain!()).case_insensitive(true).compile().unwrap();
+        RegexBuilder::new(valid_special_short_domain!()).case_insensitive(true).build().unwrap();
     pub static ref RE_VALID_MENTION_OR_LIST: Regex =
-        RegexBuilder::new(valid_mention_or_list!()).case_insensitive(true).compile().unwrap();
+        RegexBuilder::new(valid_mention_or_list!()).case_insensitive(true).build().unwrap();
     pub static ref RE_VALID_REPLY: Regex =
-        RegexBuilder::new(valid_reply!()).case_insensitive(true).compile().unwrap();
+        RegexBuilder::new(valid_reply!()).case_insensitive(true).build().unwrap();
     pub static ref RE_END_MENTION: Regex =
-        RegexBuilder::new(end_mention_match!()).case_insensitive(true).compile().unwrap();
+        RegexBuilder::new(end_mention_match!()).case_insensitive(true).build().unwrap();
     pub static ref RE_VALID_HASHTAG: Regex =
-        RegexBuilder::new(valid_hashtag!()).case_insensitive(true).compile().unwrap();
+        RegexBuilder::new(valid_hashtag!()).case_insensitive(true).build().unwrap();
     pub static ref RE_END_HASHTAG: Regex =
-        RegexBuilder::new(end_hashtag_match!()).case_insensitive(true).compile().unwrap();
+        RegexBuilder::new(end_hashtag_match!()).case_insensitive(true).build().unwrap();
     pub static ref RE_HASHTAG_INVALID_INITIAL_CHARS: Regex =
         Regex::new(hashtag_invalid_initial_chars!()).unwrap();
     pub static ref RE_VALID_SYMBOL: Regex =
-        RegexBuilder::new(valid_symbol!()).case_insensitive(true).compile().unwrap();
+        RegexBuilder::new(valid_symbol!()).case_insensitive(true).build().unwrap();
     pub static ref RE_END_SYMBOL: Regex =
-        RegexBuilder::new(end_symbol_match!()).case_insensitive(true).compile().unwrap();
+        RegexBuilder::new(end_symbol_match!()).case_insensitive(true).build().unwrap();
 }
