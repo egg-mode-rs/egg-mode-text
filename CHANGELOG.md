@@ -1,5 +1,9 @@
 # changelog for egg-mode-text
 
+## [1.15.0] - 2022-07-02
+
+Same API as 1.14.7, but with a dependency update to resolve `cargo audit` warnings.
+
 ## [1.14.7] - 2017-11-28
 
 *Huge version bump to match the upstream twitter-text version.*
