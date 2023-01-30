@@ -13,6 +13,10 @@ tests:
       text: "A lié géts halfway arøünd thé wørld béføré thé truth has a chance tø get its pants øn. Winston Churchill (1874-1965) http://bit.ly/dJpywL"
       expected: true
 
+    - description: "Valid Tweet: 280 characters (with accents)"
+      text: "A lié géts halfway arøünd thé wørld béføré thé truth has a chance tø get its pants øn. Winston Churchill (1874-1965). Ohh, let's say again: A lié géts halfway arøünd thé wørld béføré thé truth has a chance tø get its pants øn. Winston Churchill (1874-1965) http://bit.ly/dJpywL"
+      expected: true
+
     - description: "Valid Tweet: 140 characters (double byte characters)"
       text: "のののののののののののののののののののののののののののののののののののののののののののののののののののののののののののののののののののののののののののののののののののののののののののののののののののののののののののののののののののののののののののののののののののののののののののの"
       expected: true
@@ -29,7 +33,7 @@ tests:
       text: "The gratitude of every home in our Island, in our Empire, and indeed throughout the world, except in the abodes of the guilty, goes out to the British airmen who, undaunted by odds, unwearied in their constant challenge .... -- Winston Churchill (1874-1965) http://bit.ly/dJpywL"
       expected: false
 
-    - description: "Invalid Tweet: 141 characters (due to newline)"
+    - description: "Invalid Tweet: 281 characters (due to newline)"
       text: "The gratitude of every home in our Island, in our Empire, and indeed throughout the world, except in the abodes of the guilty, goes out to the British airmen who, undaunted by odds, unwearied in their constant challenge .... \n- Winston Churchill (1874-1965) http://bit.ly/dJpywL"
       expected: false
 
