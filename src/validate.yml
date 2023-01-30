@@ -25,12 +25,12 @@ tests:
       text: ""
       expected: false
 
-    - description: "Invalid Tweet: 141 characters"
-      text: "A lie gets halfway around the world before the truth has a chance to get its pants on. -- Winston Churchill (1874-1965) http://bit.ly/dJpywL"
+    - description: "Invalid Tweet: 281 characters"
+      text: "The gratitude of every home in our Island, in our Empire, and indeed throughout the world, except in the abodes of the guilty, goes out to the British airmen who, undaunted by odds, unwearied in their constant challenge .... -- Winston Churchill (1874-1965) http://bit.ly/dJpywL"
       expected: false
 
     - description: "Invalid Tweet: 141 characters (due to newline)"
-      text: "A lie gets halfway around the world before the truth has a chance to get its pants on. \n- Winston Churchill (1874-1965) http://bit.ly/dJpywL"
+      text: "The gratitude of every home in our Island, in our Empire, and indeed throughout the world, except in the abodes of the guilty, goes out to the British airmen who, undaunted by odds, unwearied in their constant challenge .... \n- Winston Churchill (1874-1965) http://bit.ly/dJpywL"
       expected: false
 
   usernames:
@@ -237,12 +237,12 @@ tests:
 
     - description: "Count unicode chars outside the basic multilingual plane (double word)"
       text: "\U00010000\U0010ffff"
-      expected: 2
+      expected: 4
 
     - description: "Count unicode chars inside the basic multilingual plane"
       text: "저찀쯿쿿"
-      expected: 4
+      expected: 8
 
     - description: "Count a mix of single byte single word, and double word unicode characters"
       text: "H\U0001f431☺"
-      expected: 3
+      expected: 5

@@ -718,6 +718,10 @@ fn extract_symbols(text: &str, url_entities: &[Entity]) -> Vec<Entity> {
 /// let count =
 ///     character_count("Test https://test.com test https://test.com test.com test", 23, 23);
 /// assert_eq!(count, 86);
+///
+/// // Chinese / Japanese / Korean should count as 2 in length
+/// let count = character_count("中文 日本語 한국인 English", 23, 23);
+/// assert_eq!(count, 26);
 ///```
 pub fn character_count(text: &str, http_url_len: i32, https_url_len: i32) -> usize {
     //twitter uses code point counts after NFC normalization
@@ -746,7 +750,16 @@ pub fn character_count(text: &str, http_url_len: i32, https_url_len: i32) -> usi
     }
 
     //make sure to count codepoints, not bytes
-    let len = text.chars().count() + url_offset;
+    let len = text.chars().fold(0, |sum, char| {
+        sum + (match char as u32 {
+            // the numbers are copied from https://github.com/twitter/twitter-text/blob/v3.1.0/java/src/main/java/com/twitter/twittertext/TwitterTextConfiguration.java#L35-L38
+            v if v <= 4351 => 1,
+            v if 8192 <= v && v <= 8205 => 1,
+            v if 8208 <= v && v <= 8223 => 1,
+            v if 8242 <= v && v <= 8247 => 1,
+            _ => 2,
+        })
+    }) + url_offset;
 
     len
 }
@@ -1205,7 +1218,7 @@ mod test {
             //23 is the default character count in the obj-c implementation, tho at time of writing
             //(2016-11-21) i think these lengths have bumped up to 24
             let count = character_count(text, 23, 23);
-            let is_valid = count > 0 && count <= 140;
+            let is_valid = count > 0 && count <= 280;
 
             assert_eq!(expected, is_valid, "test '{}' failed with text '{}', counted {} characters",
                        description, text, count);
