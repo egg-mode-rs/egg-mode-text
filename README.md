@@ -59,7 +59,7 @@ To use this crate in your own project, add the following to your Cargo.toml:
 
 ```toml
 [dependencies]
-egg-mode-text = "1.15.0"
+egg-mode-text = "1.15.1"
 ```
 
 ...and add the following to your crate root:

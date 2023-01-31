@@ -1,6 +1,6 @@
 [package]
 name = "egg-mode-text"
-version = "1.15.0"
+version = "1.15.1"
 authors = ["QuietMisdreavus <grey@quietmisdreavus.net>"]
 description = "Text parsing for Twitter: character counting, hashtag/mention extraction"
 documentation = "https://docs.rs/egg-mode-text"
